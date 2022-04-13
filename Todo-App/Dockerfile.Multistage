@@ -1,0 +1,38 @@
+# Stage 1
+#######################################
+
+# Pull official node base image
+FROM node:16.14.2 AS build
+
+# Set working directory
+WORKDIR /app
+
+# Copies package.json to Docker container
+COPY . .
+
+# Installs node packages
+RUN npm install 
+
+# Builds the application
+RUN npm run build
+
+# Stage 2
+#######################################
+
+# Pull the official nginx:1.19.0 base image
+FROM nginx:1.19.0
+
+EXPOSE 80
+EXPOSE 443
+
+# Set working directory to nginx resources directory
+WORKDIR /usr/share/nginx/html
+
+# Remove default nginx static assets
+RUN rm -rf ./*
+
+# Copies static resources from build stage
+COPY --from=build /app/build .
+
+# Containers run nginx with global directives and daemon off
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

@@ -1,8 +1,8 @@
-# Stage 1
-#######################################
-
 # Pull official node base image
 FROM node:16.14.2 AS build
+
+# Exposes the port
+EXPOSE 3000
 
 # Set working directory
 WORKDIR /app
@@ -19,23 +19,5 @@ COPY . ./
 # Builds the application
 RUN npm run build
 
-# Stage 2
-#######################################
-
-# Pull the official nginx:1.19.0 base image
-FROM nginx:1.19.0
-
-EXPOSE 80
-EXPOSE 443
-
-# Set working directory to nginx resources directory
-WORKDIR /usr/share/nginx/html
-
-# Remove default nginx static resources
-RUN rm -rf ./*
-
-# Copies static resources from build stage
-COPY --from=build /app/build .
-
-# Containers run nginx with global directives and daemon off
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+# The entry point of the container and the command and parameters ran on startup 
+ENTRYPOINT ["npm", "start"]
