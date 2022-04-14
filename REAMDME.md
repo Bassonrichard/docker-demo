@@ -13,6 +13,7 @@
 - docker ps -a
 - docker run -p 8080:3000 -d --name todo-app todo-app:1.0.0
 
-##Exmaple Voting App
+##Example Voting App
 - docker-compose build
 - docker-compose up -d
+- docker-compose down

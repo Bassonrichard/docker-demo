@@ -11,6 +11,8 @@ WORKDIR /app
 COPY . .
 
 # Installs node packages
+RUN npm i -g npm
+
 RUN npm install 
 
 # Builds the application
