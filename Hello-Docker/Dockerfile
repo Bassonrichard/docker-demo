@@ -1,5 +1,7 @@
 # Pull official node base image
-FROM node:16.14.2 AS build
+FROM node:21 AS build
+
+EXPOSE 3000
 
 # Set working directory
 WORKDIR /app
@@ -9,10 +11,7 @@ COPY . .
 
 # Installs node packages
 RUN npm i -g npm
-
 RUN npm install 
 
-# Builds the application
-RUN npm run build
-
-CMD [ "node", "server.js" ]
+# Run the application
+CMD [ "npm", "run", "start" ]
