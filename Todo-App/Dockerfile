@@ -1,5 +1,5 @@
 # Pull official node base image
-FROM node:16.14.2 AS build
+FROM node:21 AS build
 
 # Exposes the port
 EXPOSE 3000

@@ -1,6 +1,7 @@
 # Pull official node base image
 FROM node:21 AS build
 
+# Exposes the port
 EXPOSE 3000
 
 # Set working directory
@@ -14,4 +15,4 @@ RUN npm i -g npm
 RUN npm install 
 
 # Run the application
-CMD [ "npm", "run", "start" ]
+ENTRYPOINT ["npm", "start"]
